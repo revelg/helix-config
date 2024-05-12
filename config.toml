@@ -1,0 +1,26 @@
+theme = "gruvbox_mix_dark"
+
+[editor]
+mouse = true
+preview-completion-insert = false
+completion-trigger-len = 1
+completion-replace = true
+bufferline = "always"
+cursorline = true
+color-modes = true
+popup-border = "all"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.lsp]
+display-inlay-hints = true
+
+[editor.indent-guides]
+render = true
+
+[editor.soft-wrap]
+enable = true
+wrap-indicator = "-> "
