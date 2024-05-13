@@ -2,6 +2,14 @@
 # LANGUAGES SERVERS
 ##################################################################
 
+# MARKSMAN
+[language-server.marksman]
+command = "marksman"
+
+# VSCODE-JSON-LANGUAGE-SERVER
+[language-server.vscode-json-language-server]
+command = "vscode-json-language-server"
+
 # VSCODE-HTML-LANGUAGE-SERVER 
 [language-server.vscode-html-language-server]
 command = "vscode-html-language-server"
@@ -21,32 +29,67 @@ command = "typescript-language-server"
 args = ["--stdio"]
 
 # PYLSP
-# [language-server.pylsp]
-# command = "pylsp"
+[language-server.pylsp]
+command = "pylsp"
+
+[language-server.pylsp.config.pylsp.plugins]
+flake8 = {enabled = true, ignore = ["E501", "E305", "E302", "W293"]}
+autopep8 = {enabled = false}
+mccabe = {enabled = false}
+pycodestyle = {enabled = false}
+pyflakes = {enabled = false}
+pylint = {enabled = false}
+yapf = {enabled = false}
+ruff = { enabled = false}
 
 # GOPLS
 [language-server.gopls]
 command = "gopls"
 
+[language-server.gopls.config]
+command = { "gofumpt" = true, "local" = "goimports", "semanticTokens" = true, "staticcheck" = true, "verboseOutput" = true, "analyses" = { "fieldalignment" = true, "nilness" = true, unusedparams = true, unusedwrite = true, useany = true }, usePlaceholders = true, completeUnimported = true, hints = { "assignVariableType" = true, "compositeLiteralFields" = true, "compositeLiteralTypes" = true, "constantValues" = true, "functionTypeParameters" = true, "parameterNames" = true, "rangeVariableTypes" = true }, "ui.diagnostic.staticcheck" = true}
+
+# GOLANGCI-LINT-LANGSERVER
+[language-server.golangci-lint-lsp]
+command = "golangci-lint-langserver"
+
+[language-server.golangci-lint-lsp.config]
+command = ["golangci-lint", "run", "-D", "deadcode", "varcheck", "scopelint", "nosnakecase", "maligned", "-E", "revive", "forbidigo", "bidichk", "dupl", "errcheck", "exhaustive", "exhaustruct", "gocritic", "goimports", "gosec", "govet", "perfsprint", "prealloc", "staticcheck", "unparam", "unused", "--out-format", "json", "--issues-exit-code=1"]
+
 ##################################################################
 # LANGUAGES CONFIG
 ##################################################################
+
+# MARKDOWN
+[[language]]
+name = "markdown"
+language-servers = [ "marksman" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "markdown"]}
+
+# JSON
+[[language]]
+name = "json"
+auto-format = true
+language-servers = [{name = "vscode-json-language-server"}]
+formatter = { command = "prettier", args = ["--parser", "json"]}
+indent = {tab-width = 2, unit = "  "}
 
 # HTML
 [[language]]
 name = "html"
 auto-format = true
 language-servers = [ "vscode-html-language-server", "emmet-lsp" ]
-formatter = { command = "prettier", args = ["--parser", "typescript"]}
+formatter = { command = "prettier", args = ["--parser", "html"]}
 file-types = ["html", "gohtml"]
 indent = {tab-width = 2, unit = "  "}
 
 # CSS
 [[language]]
 name = "css"
-auto-format = false
+auto-format = true
 language-servers = [{name = "vscode-css-language-server"}]
-formatter = { command = "prettier", args = ["--parser", "typescript"]}
+formatter = { command = "prettier", args = ["--parser", "css"]}
 indent = {tab-width = 2, unit = "  "}
 
 # JAVASCRIPT
@@ -65,20 +108,20 @@ language-servers = [{name = "typescript-language-server"}]
 indent = {tab-width = 4, unit = "    "}
 
 # PYTHON
-# [[language]]
-# name = "python"
-# auto-format = false
-# language-servers = [{name = "pylsp"}]
-# formatter = {command = "black", args = ["--quiet", "-"]}
-# indent = {tab-width = 4, unit = "    "}
-# shebangs = ["python"]
+[[language]]
+name = "python"
+auto-format = false
+language-servers = [{name = "pylsp"}]
+formatter = {command = "black", args = ["--quiet", "-"]}
+indent = {tab-width = 4, unit = "    "}
+shebangs = ["python"]
 
 # GO
 [[language]]
 name = "go"
 auto-format = true
 formatter = { command = "goimports" }
-language-servers = [{name = "gopls"}]
+language-servers = ["gopls", "golangci-lint-lsp"]
 indent = {tab-width = 4, unit = "    "}
 
 [[language]]
@@ -98,72 +141,3 @@ name = "gowork"
 auto-format = false
 language-servers = [{name = "gopls"}]
 indent = {tab-width = 4, unit = "    "}
-
-# GO 2
-# [[language]]
-# name = "go"
-# auto-format = true
-# formatter = { command = "goimports" }
-# language-servers = [ "gopls", "golangci-lint-lsp" ]
-
-# [language-server.gopls]
-# command = "gopls"
-# args = ["-logfile=/tmp/gopls.log",  "serve"]
-
-# [language-server.gopls.config]
-# "ui.diagnostic.staticcheck" = true
-
-# [language-server.gopls.config.hints]
-# assignVariableTypes = true
-# compositeLiteralFields = true
-# compositeLiteralTypes = true
-# constantValues = true
-# functionTypeParameters = true
-# parameterNames = true
-# rangeVariableTypes = true
-
-# [language-server.golangci-lint-lsp]
-# command = "golangci-lint-langserver"
-
-# [language-server.golangci-lint-lsp.config]
-# command = [
-#   "golangci-lint",
-#   "run",
-#   "-D",
-#   "deadcode",
-#   "varcheck",
-#   "scopelint",
-#   "nosnakecase",
-#   "maligned",
-#   "-E",
-#   "revive",
-#   "forbidigo",
-#   "bidichk",
-#   "dupl",
-#   "errcheck",
-#   "exhaustive",
-#   "exhaustruct",
-#   "gocritic",
-#   "goimports",
-#   "gosec",
-#   "govet",
-#   "perfsprint",
-#   "prealloc",
-#   "staticcheck",
-#   "unparam",
-#   "unused",
-#   "--out-format",
-#   "json",
-#   "--issues-exit-code=1",
-# ]
-
-# [language-server.golangci-lint-lsp]
-# command = "golangci-lint-langserver"
-
-# [language-server.golangci-lint-lsp.config]
-# command = [ "golangci-lint", "run", "errcheck", "--out-format", "json", "--issues-exit-code=1" ]
-
-# language-servers = ["golangci-lint", "gopls"]
-# [language-server.gopls]
-# command = "gopls"
-# config = { "gofumpt" = true, "local" = "goimports", "semanticTokens" = true, "staticcheck" = true, "verboseOutput" = true, "analyses" = { "fieldalignment" = true, "nilness" = true, unusedparams = true, unusedwrite = true, useany = true }, usePlaceholders = true, completeUnimported = true, hints = { "assignVariableType" = true, "compositeLiteralFields" = true, "compositeLiteralTypes" = true, "constantValues" = true, "functionTypeParameters" = true, "parameterNames" = true, "rangeVariableTypes" = true } }
