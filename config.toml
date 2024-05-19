@@ -24,3 +24,13 @@ render = true
 [editor.soft-wrap]
 enable = true
 wrap-indicator = "-> "
+
+###############
+# CUSTOM KEYS #
+###############
+
+[keys.insert]
+A-w = ":write"
+
+[keys.normal]
+A-w = ":write"

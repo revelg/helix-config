@@ -50,11 +50,11 @@ command = "gopls"
 command = { "gofumpt" = true, "local" = "goimports", "semanticTokens" = true, "staticcheck" = true, "verboseOutput" = true, "analyses" = { "fieldalignment" = true, "nilness" = true, unusedparams = true, unusedwrite = true, useany = true }, usePlaceholders = true, completeUnimported = true, hints = { "assignVariableType" = true, "compositeLiteralFields" = true, "compositeLiteralTypes" = true, "constantValues" = true, "functionTypeParameters" = true, "parameterNames" = true, "rangeVariableTypes" = true }, "ui.diagnostic.staticcheck" = true}
 
 # GOLANGCI-LINT-LANGSERVER
-[language-server.golangci-lint-lsp]
-command = "golangci-lint-langserver"
+# [language-server.golangci-lint-lsp]
+# command = "golangci-lint-langserver"
 
-[language-server.golangci-lint-lsp.config]
-command = ["golangci-lint", "run", "-D", "deadcode", "varcheck", "scopelint", "nosnakecase", "maligned", "-E", "revive", "forbidigo", "bidichk", "dupl", "errcheck", "exhaustive", "exhaustruct", "gocritic", "goimports", "gosec", "govet", "perfsprint", "prealloc", "staticcheck", "unparam", "unused", "--out-format", "json", "--issues-exit-code=1"]
+# [language-server.golangci-lint-lsp.config]
+# command = ["golangci-lint", "run", "-D", "deadcode", "varcheck", "scopelint", "nosnakecase", "maligned", "-E", "revive", "forbidigo", "bidichk", "dupl", "errcheck", "exhaustive", "exhaustruct", "gocritic", "goimports", "gosec", "govet", "perfsprint", "prealloc", "staticcheck", "unparam", "unused", "--out-format", "json", "--issues-exit-code=1"]
 
 ##################################################################
 # LANGUAGES CONFIG
@@ -95,7 +95,7 @@ indent = {tab-width = 2, unit = "  "}
 # JAVASCRIPT
 [[language]]
 name = "javascript"
-auto-format = false
+auto-format = true
 language-servers = [{name = "typescript-language-server"}]
 formatter = { command = "prettier", args = ["--parser", "typescript"]}
 indent = {tab-width = 2, unit = "  "}
@@ -121,7 +121,7 @@ shebangs = ["python"]
 name = "go"
 auto-format = true
 formatter = { command = "goimports" }
-language-servers = ["gopls", "golangci-lint-lsp"]
+language-servers = ["gopls"] # "golangci-lint-lsp"
 indent = {tab-width = 4, unit = "    "}
 
 [[language]]
